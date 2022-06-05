@@ -19,12 +19,7 @@ public class Utils {
     public static void debug(Object ...object) {
         if(!debugValue) return;
 
-        StringBuilder objlog = new StringBuilder();
-        for(Object o : object) {
-            objlog.append(o).append(" ");
-        }
-
-        Bukkit.getLogger().info(prefix + " " + objlog);
+       log(object);
 
     }
 
