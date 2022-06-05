@@ -1,0 +1,6 @@
+name: MCCoin
+version: '1.0.0'
+main: id.orume.mccoin.MCCoin
+authors: [ Yusta ]
+description: Minecraft Exclusive Coin/Currency library for servers.
+website: orume.id
