@@ -1,7 +1,6 @@
 package id.orume.mccoin.commands;
 
 import id.orume.mccoin.MCCoin;
-import id.orume.mccoin.MCCoinCMD;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +14,7 @@ public class HelpSubCmd extends SubCommand {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull List<String> args) {
-        sender.sendMessage(MCCoinCMD.commandsDescription);
+        sender.sendMessage(plugin.getMcCoinCMD().getCommandsDescription());
     }
 
     @Override
