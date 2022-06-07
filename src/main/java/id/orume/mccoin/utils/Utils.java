@@ -1,4 +1,4 @@
-package id.orume.mccoin;
+package id.orume.mccoin.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 public class Utils {
     public static boolean debugValue;
     public static String prefix = colorize("&d[&6MCCoin&d]");
+
     public static void log(Object ...object) {
         StringBuilder objlog = new StringBuilder();
         for(Object o : object) {
@@ -19,8 +20,8 @@ public class Utils {
     public static void debug(Object ...object) {
         if(!debugValue) return;
 
-       log(object);
 
+       log(object);
     }
 
     public static String colorize(String text) {
