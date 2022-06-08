@@ -1,5 +1,6 @@
 package id.orume.mccoin;
 
+import id.orume.mccoin.coinmanager.CoinManager;
 import id.orume.mccoin.config.MainConfig;
 import id.orume.mccoin.utils.Utils;
 import lombok.Getter;
@@ -9,20 +10,20 @@ public final class MCCoin extends JavaPlugin {
     @Getter private final MainConfig mainConfig = new MainConfig(this);
     @Getter private final MCCoinCMD mcCoinCMD = new MCCoinCMD(this);
     @Getter private final MCCoinDB mcCoinDB = new MCCoinDB(this);;
+    @Getter private final CoinManager coinManager = new CoinManager(this);
 
 
     @Override
     public void onEnable() {
         Utils.debugValue = mainConfig.isDebug();
-
+        Utils.log("MCCoin loaded successfully");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        if(mcCoinDB.getHikari() != null) {
-            mcCoinDB.getHikari().close();
-        }
+
+        this.mcCoinDB.closePool();
 
     }
 }

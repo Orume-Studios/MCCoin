@@ -17,11 +17,25 @@ public class Utils {
 
     }
 
+    public static void logWithColor(Object ...object) {
+        StringBuilder objlog = new StringBuilder();
+        for(Object o : object) {
+            objlog.append(colorize((String.valueOf(o)))).append(" ");
+        }
+
+        Bukkit.getLogger().info(prefix + " " + objlog);
+    }
+
     public static void debug(Object ...object) {
         if(!debugValue) return;
 
 
-       log(object);
+        StringBuilder objlog = new StringBuilder();
+        for(Object o : object) {
+            objlog.append(colorize((String.valueOf(o)))).append(" ");
+        }
+
+        Bukkit.getLogger().info("[DEBUG]: " + objlog);
     }
 
     public static String colorize(String text) {

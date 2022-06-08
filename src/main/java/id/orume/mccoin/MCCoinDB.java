@@ -4,6 +4,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import id.orume.mccoin.utils.Utils;
 import lombok.Getter;
+import lombok.SneakyThrows;
+
+import java.sql.Connection;
 
 public class MCCoinDB {
     @Getter private final HikariDataSource hikari;
@@ -16,7 +19,7 @@ public class MCCoinDB {
         String databaseName = plugin.getMainConfig().getDatabaseConfig().getDatabaseName();
         String storageMethod = plugin.getMainConfig().getDatabaseConfig().getStorageMethod();
         if(storageMethod == null) {
-            Utils.log(Utils.colorize("&cCannot initialize database connection. Storage method is not defined."));
+            Utils.logWithColor("&cCannot initialize database connection. Storage method is not defined.");
             plugin.getPluginLoader().disablePlugin(plugin);
         } else  {
             if(storageMethod.equalsIgnoreCase("mysql")) {
@@ -35,8 +38,8 @@ public class MCCoinDB {
                 config.setDriverClassName("org.mariadb.jdbc.Driver");
                 config.setJdbcUrl("jdbc:mariadb://" + host + ":" + port + "/" + databaseName);
             } else {
-                Utils.log(Utils.colorize("&cCannot initialize database connection. Unknown storage method: &e" + storageMethod));
-                Utils.log(Utils.colorize("&cStorage method " + plugin.getMainConfig().getDatabaseConfig().getStorageMethod() + " is not supported"));
+                Utils.logWithColor("&cCannot initialize database connection. Unknown storage method: &e" + storageMethod);
+                Utils.logWithColor("&cStorage method " + plugin.getMainConfig().getDatabaseConfig().getStorageMethod() + " is not supported");
                 plugin.getPluginLoader().disablePlugin(plugin);
             }
         }
@@ -47,9 +50,33 @@ public class MCCoinDB {
         config.addDataSourceProperty("user", plugin.getMainConfig().getDatabaseConfig().getUsername());
         config.addDataSourceProperty("password", plugin.getMainConfig().getDatabaseConfig().getPassword());
         config.addDataSourceProperty("autoReconnect",true);
+        config.addDataSourceProperty("cachePrepStmts",true);
+        config.addDataSourceProperty("useSSL", plugin.getMainConfig().getDatabaseConfig().isUseSSL());
+
+
+        config.setMaximumPoolSize(plugin.getMainConfig().getDatabaseConfig().getMaximumPoolSize());
+        config.setMinimumIdle(plugin.getMainConfig().getDatabaseConfig().getMinimumIdle());
+        config.setMaxLifetime(plugin.getMainConfig().getDatabaseConfig().getMaximumLifetime());
+        config.setIdleTimeout(plugin.getMainConfig().getDatabaseConfig().getKeepAliveTime());
+        config.setConnectionTimeout(plugin.getMainConfig().getDatabaseConfig().getConnectionTimeout());
+        config.setKeepaliveTime(plugin.getMainConfig().getDatabaseConfig().getKeepAliveTime());
+
+
         config.setConnectionTestQuery("SELECT 1");
         config.setPoolName("Orume-MCCoin-Hikari");
 
         this.hikari = new HikariDataSource(config);
+    }
+
+    @SneakyThrows
+    public Connection getConnection() {
+        return this.hikari.getConnection();
+    }
+
+    public void closePool() {
+        Utils.log("Closing database connection pool");
+        if(this.hikari != null) {
+            this.hikari.close();
+        }
     }
 }
