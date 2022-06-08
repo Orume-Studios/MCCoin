@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AddSubCmd extends SubCommand {
     public AddSubCmd(MCCoin plugin) {
-        super(plugin, "add", "Add coins to a player", "", "mccoin.add", false);
+        super(plugin, "add", "Add coins to a player", "<player> <amount>", "mccoin.add", false);
     }
 
     @Override

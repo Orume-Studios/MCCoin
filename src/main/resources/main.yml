@@ -1,2 +1,9 @@
 # trying a command
 debug: true
+database:
+  host: localhost
+  port: 3306
+  username: "mysql_user"
+  password: "mysql_password"
+  database-name: "mccoin"
+  storage-method: "h2"

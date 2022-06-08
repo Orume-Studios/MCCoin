@@ -16,7 +16,7 @@ public class MainConfig extends Config {
     void reload() {
         this.load();
         this.debug = this.yamlConf.getBoolean("debug");
-        this.databaseConfig = new DatabaseConfig(plugin);
+        this.databaseConfig = new DatabaseConfig(this.yamlConf);
 
     }
 }
