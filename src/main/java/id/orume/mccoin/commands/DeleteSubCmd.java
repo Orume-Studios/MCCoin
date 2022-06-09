@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DeleteSubCmd extends SubCommand {
     public DeleteSubCmd(MCCoin plugin) {
-        super(plugin, "delete", "Deletes a coin key", "<name>", "mccoin.create", false);
+        super(plugin, "delete", "Deletes a coin key", "<name>", "mccoin.delete", false);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DeleteSubCmd extends SubCommand {
     @Override
     public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull List<String> args) {
         if(args.isEmpty()) {
-            args.set(0, "coin_name");
+            args.set(0, "<coin_name>");
             return args;
         }
         return null;

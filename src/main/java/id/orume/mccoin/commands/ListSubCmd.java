@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ListSubCmd extends SubCommand{
     public ListSubCmd(MCCoin plugin) {
-        super(plugin, "list", "Shows the coin key names", "<name>", "mccoin.create", false);
+        super(plugin, "list", "Shows the coin key names", "<name>", "mccoin.list", false);
     }
 
     @Override
@@ -20,12 +20,13 @@ public class ListSubCmd extends SubCommand{
             return;
         }
 
-        sender.sendMessage(ChatColor.YELLOW + "There is " + ChatColor.GREEN + coinNames.size() + ChatColor.YELLOW + " coins:");
+        sender.sendMessage(ChatColor.YELLOW + "There are " + ChatColor.GREEN + coinNames.size() + ChatColor.YELLOW + " coins:");
         sender.sendMessage(ChatColor.AQUA + String.join(", ", coinNames));
     }
 
     @Override
     public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull List<String> args) {
+
         return null;
     }
 

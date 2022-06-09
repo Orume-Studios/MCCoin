@@ -32,7 +32,8 @@ public class CoinCMD implements CommandExecutor, TabExecutor {
         pluginCommand.setExecutor(this);
         this.subCommandList.addAll(
                 Arrays.asList(
-                        new HelpSubCmd(plugin), new AddSubCmd(plugin), new CreateSubCmd(plugin), new DeleteSubCmd(plugin), new ListSubCmd(plugin)
+                        new HelpSubCmd(plugin), new CreateSubCmd(plugin), new DeleteSubCmd(plugin), new ListSubCmd(plugin),
+                        new AddSubCmd(plugin), new RemoveSubCmd(plugin), new ResetSubCmd(plugin), new GetSubCmd(plugin), new ResetSubCmd(plugin)
                 )
         );
 
@@ -93,6 +94,10 @@ public class CoinCMD implements CommandExecutor, TabExecutor {
         } else if(args.length > 1) {
             SubCommand subCommand = this.subCommandList.stream().filter(sc -> sc.getName().equalsIgnoreCase(args[0])).findFirst().orElse(null);
             if(subCommand != null) {
+                if(!subCommand.getPermission().isEmpty() && !commandSender.hasPermission(subCommand.getPermission())) {
+                    return null;
+                }
+
                 List<String> arguments = new ArrayList<>(Arrays.asList(args));
                 arguments.remove(0);
 

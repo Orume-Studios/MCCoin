@@ -8,21 +8,20 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class AddSubCmd extends SubCommand {
-    public AddSubCmd(MCCoin plugin) {
-        super(plugin, "add", "Add coins to a player", "<coin_name> <player> <amount>", "mccoin.add", false);
+public class ResetSubCmd extends SubCommand {
+    public ResetSubCmd(MCCoin plugin) {
+        super(plugin, "reset", "Reset the coins from a player", "<coin_name> <player>", "mccoin.reset", false);
     }
 
     @Override
     public void execute(@NonNull CommandSender sender, @NonNull List<String> args) {
-        if(args.size() < 3) {
-            sender.sendMessage(ChatColor.RED + "Usage: /mccoin add <coin_name> <player> <amount>");
+        if(args.size() < 2) {
+            sender.sendMessage(ChatColor.RED + "Usage: /mccoin add <coin_name> <player>");
             return;
         }
 
         String coinName = args.get(0);
         String playerName = args.get(1);
-        int amount = Integer.parseInt(args.get(2));
 
         Integer coinId = this.plugin.getCoinManager().getCoinKeyId(coinName);
         if(coinId == null) {
@@ -30,15 +29,14 @@ public class AddSubCmd extends SubCommand {
             return;
         }
 
-        Integer currentAmount = this.plugin.getCoinManager().getPlayerCoinAmount(playerName, coinId);
 
-        if(currentAmount != null) amount += currentAmount;
-        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, amount, currentAmount);
+        Integer currentAmount = this.plugin.getCoinManager().getPlayerCoinAmount(playerName, coinId);
+        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, 0, currentAmount);
 
         if(isSuccess) {
-            sender.sendMessage(ChatColor.GREEN + "Successfully added " + ChatColor.YELLOW + args.get(2) + ChatColor.GREEN + " coins to " + ChatColor.YELLOW + playerName);
+            sender.sendMessage(ChatColor.GREEN + "Successfully reset the coins from " + ChatColor.YELLOW + playerName);
         } else {
-            sender.sendMessage(ChatColor.RED + "Failed to add " + ChatColor.YELLOW + args.get(2) + ChatColor.RED + " coins to " + ChatColor.YELLOW + playerName);
+            sender.sendMessage(ChatColor.RED + "Failed to reset the coins from " + ChatColor.YELLOW + playerName);
         }
     }
 

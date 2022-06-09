@@ -25,12 +25,6 @@ public class CoinDB {
             if(storageMethod.equalsIgnoreCase("mysql")) {
                 config.setDriverClassName("com.mysql.jdbc.Driver");
                 config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + databaseName);
-            } else if(storageMethod.equalsIgnoreCase("sqlite")) {
-                config.setDriverClassName("org.sqlite.JDBC");
-                config.setJdbcUrl("jdbc:sqlite:" + plugin.getDataFolder() + "/" + databaseName + ".db");
-            } else if(storageMethod.equalsIgnoreCase("postgresql")) {
-                config.setDriverClassName("org.postgresql.Driver");
-                config.setJdbcUrl("jdbc:postgresql://" + host + ":" + port + "/" + databaseName);
             } else if(storageMethod.equalsIgnoreCase("h2")) {
                 config.setDriverClassName("org.h2.Driver");
                 config.setJdbcUrl("jdbc:h2:" + "./" + plugin.getDataFolder() + "/" + databaseName + ".db");

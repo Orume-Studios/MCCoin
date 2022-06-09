@@ -30,7 +30,7 @@ public class CreateSubCmd extends SubCommand {
             return;
         }
 
-        boolean result = this.plugin.getCoinManager().addCoinKey(name);
+        boolean result = this.plugin.getCoinManager().createCoinKey(name);
         if(result) {
             sender.sendMessage(ChatColor.GREEN + "Successfully created a coin with name " + ChatColor.YELLOW + name);
         } else {
@@ -41,7 +41,7 @@ public class CreateSubCmd extends SubCommand {
     @Override
     public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull List<String> args) {
         if(args.isEmpty()) {
-            args.set(0, "coin_name");
+            args.set(0, "<coin_name>");
             return args;
         }
         return null;

@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class AddSubCmd extends SubCommand {
-    public AddSubCmd(MCCoin plugin) {
-        super(plugin, "add", "Add coins to a player", "<coin_name> <player> <amount>", "mccoin.add", false);
+public class RemoveSubCmd extends SubCommand {
+    public RemoveSubCmd(MCCoin plugin) {
+        super(plugin, "remove", "Remove coins from a player", "<coin_name> <player> <amount>", "mccoin.remove", false);
     }
 
     @Override
@@ -32,13 +32,23 @@ public class AddSubCmd extends SubCommand {
 
         Integer currentAmount = this.plugin.getCoinManager().getPlayerCoinAmount(playerName, coinId);
 
-        if(currentAmount != null) amount += currentAmount;
-        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, amount, currentAmount);
-
-        if(isSuccess) {
-            sender.sendMessage(ChatColor.GREEN + "Successfully added " + ChatColor.YELLOW + args.get(2) + ChatColor.GREEN + " coins to " + ChatColor.YELLOW + playerName);
+        if(currentAmount == null) {
+            sender.sendMessage(ChatColor.RED + "The player does not have any coin!");
+            return;
         } else {
-            sender.sendMessage(ChatColor.RED + "Failed to add " + ChatColor.YELLOW + args.get(2) + ChatColor.RED + " coins to " + ChatColor.YELLOW + playerName);
+            amount = currentAmount - amount;
+            if(amount < 0) {
+                sender.sendMessage(Lang.INVALID_ARGUMENT.getStringValue() + ", the amount is too big!");
+                return;
+            }
+        }
+
+
+        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, amount, currentAmount);
+        if(isSuccess) {
+            sender.sendMessage(ChatColor.GREEN + "Successfully removed " + ChatColor.YELLOW + args.get(2)  + ChatColor.GREEN + " coins from " + ChatColor.YELLOW + playerName);
+        } else {
+            sender.sendMessage(ChatColor.RED + "Failed to remove " + ChatColor.YELLOW + args.get(2) + ChatColor.RED + " coins from " + ChatColor.YELLOW + playerName);
         }
     }
 

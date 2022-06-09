@@ -4,11 +4,9 @@ database:
   # Remote Databases - require connection credentials to be configured
   # MySQL
   # MariaDB
-  # PostgreSQL
   #
   # Flat/local database - no extra config needed
   # H2
-  # SQLite
   storage-method: "mysql"
 
   # Define the address and port for the database.
