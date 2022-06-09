@@ -8,10 +8,10 @@ import lombok.SneakyThrows;
 
 import java.sql.Connection;
 
-public class MCCoinDB {
+public class CoinDB {
     @Getter private final HikariDataSource hikari;
 
-    public MCCoinDB(MCCoin plugin) {
+    public CoinDB(MCCoin plugin) {
         HikariConfig config = new HikariConfig();
 
         String host = plugin.getMainConfig().getDatabaseConfig().getHost();
@@ -51,7 +51,9 @@ public class MCCoinDB {
         config.addDataSourceProperty("password", plugin.getMainConfig().getDatabaseConfig().getPassword());
         config.addDataSourceProperty("autoReconnect",true);
         config.addDataSourceProperty("cachePrepStmts",true);
-        config.addDataSourceProperty("useSSL", plugin.getMainConfig().getDatabaseConfig().isUseSSL());
+        if(plugin.getMainConfig().getDatabaseConfig().isUseSSL()) {
+            config.addDataSourceProperty("useSSL",true);
+        }
 
 
         config.setMaximumPoolSize(plugin.getMainConfig().getDatabaseConfig().getMaximumPoolSize());

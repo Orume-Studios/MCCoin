@@ -1,25 +1,28 @@
 package id.orume.mccoin;
 
-import id.orume.mccoin.commands.AddSubCmd;
-import id.orume.mccoin.commands.HelpSubCmd;
-import id.orume.mccoin.commands.SubCommand;
+import id.orume.mccoin.commands.*;
 import id.orume.mccoin.utils.Lang;
 import id.orume.mccoin.utils.Utils;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MCCoinCMD implements CommandExecutor, TabExecutor {
+public class CoinCMD implements CommandExecutor, TabExecutor {
     private final List<String> subCmdNameList = new ArrayList<>();
     private final List<SubCommand> subCommandList = new ArrayList<>();
+    private final MCCoin plugin;
     @Getter private String commandsDescription = "";
 
-    public MCCoinCMD(MCCoin plugin) {
+    public CoinCMD(MCCoin plugin) {
+        this.plugin = plugin;
+    }
+
+    public void registerCommands() {
         PluginCommand pluginCommand = plugin.getCommand("mccoin");
         if(pluginCommand == null) {
             Utils.log("Failed to register command");
@@ -29,7 +32,7 @@ public class MCCoinCMD implements CommandExecutor, TabExecutor {
         pluginCommand.setExecutor(this);
         this.subCommandList.addAll(
                 Arrays.asList(
-                    new HelpSubCmd(plugin), new AddSubCmd(plugin)
+                        new HelpSubCmd(plugin), new AddSubCmd(plugin), new CreateSubCmd(plugin), new DeleteSubCmd(plugin), new ListSubCmd(plugin)
                 )
         );
 
@@ -53,7 +56,7 @@ public class MCCoinCMD implements CommandExecutor, TabExecutor {
 
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] args) {
+    public boolean onCommand(@NonNull CommandSender commandSender, @NonNull Command command, @NonNull String s, String[] args) {
         if(args.length == 0) {
             commandSender.sendMessage(commandsDescription);
             return true;
@@ -75,19 +78,25 @@ public class MCCoinCMD implements CommandExecutor, TabExecutor {
             return true;
         }
 
-        subCommand.execute(commandSender, new ArrayList<>(Arrays.asList(args)));
+        List<String> arguments = new ArrayList<>(Arrays.asList(args));
+        arguments.remove(0);
+
+        subCommand.execute(commandSender, arguments);
 
         return true;
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] args) {
+    public List<String> onTabComplete(@NonNull CommandSender commandSender, @NonNull Command command, @NonNull String s, String[] args) {
         if(args.length == 1) {
             return subCmdNameList;
         } else if(args.length > 1) {
             SubCommand subCommand = this.subCommandList.stream().filter(sc -> sc.getName().equalsIgnoreCase(args[0])).findFirst().orElse(null);
             if(subCommand != null) {
-                return subCommand.onTabComplete(commandSender, Arrays.asList(args));
+                List<String> arguments = new ArrayList<>(Arrays.asList(args));
+                arguments.remove(0);
+
+                return subCommand.onTabComplete(commandSender, arguments);
             }
         }
 

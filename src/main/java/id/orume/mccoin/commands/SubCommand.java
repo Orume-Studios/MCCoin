@@ -2,8 +2,8 @@ package id.orume.mccoin.commands;
 
 import id.orume.mccoin.MCCoin;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public abstract class SubCommand {
         this.onlyPlayer = onlyPlayer;
     }
 
-    public abstract void execute(@NotNull CommandSender sender, @NotNull List<String> args);
-    public abstract List<String> onTabComplete(@NotNull CommandSender sender, @NotNull List<String> args);
+    public abstract void execute(@NonNull CommandSender sender, @NonNull List<String> args);
+    public abstract List<String> onTabComplete(@NonNull CommandSender sender, @NonNull List<String> args);
 
 }

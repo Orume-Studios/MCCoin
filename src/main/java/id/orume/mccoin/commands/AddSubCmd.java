@@ -1,8 +1,8 @@
 package id.orume.mccoin.commands;
 
 import id.orume.mccoin.MCCoin;
+import lombok.NonNull;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ public class AddSubCmd extends SubCommand {
     }
 
     @Override
-    public void execute(@NotNull CommandSender sender, @NotNull List<String> args) {
+    public void execute(@NonNull CommandSender sender, @NonNull List<String> args) {
 
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull List<String> args) {
+    public List<String> onTabComplete(@NonNull  CommandSender sender, @NonNull  List<String> args) {
         return null;
     }
 }
