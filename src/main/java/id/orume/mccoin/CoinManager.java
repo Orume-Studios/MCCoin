@@ -1,11 +1,13 @@
 package id.orume.mccoin;
 
 import id.orume.mccoin.utils.Utils;
+import id.orume.mccoinapi.ICoinManager;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoinManager {
+public class CoinManager implements ICoinManager {
     private final MCCoin plugin;
     private final String coinKeyTable;
     private final String coinDataTable;
@@ -66,13 +68,13 @@ public class CoinManager {
 
     /**
      *
-     * @param coinId - The Coin ID
      * @param username - The player's username
+     * @param coinId - The Coin ID
      * @param amount - The coin amount to set
      * @param currentCoinAmount - Current player coin amount, use {@link #getPlayerCoinAmount(String, int)} to get the current amount.
      * @return - returns true if the data operation success.
      */
-    public boolean setPlayerCoinAmount(int coinId, String username, int amount, Integer currentCoinAmount) {
+    public boolean setPlayerCoinAmount(String username, int coinId, int amount, Integer currentCoinAmount) {
         try(Connection connection = plugin.getCoinDB().getConnection()) {
             PreparedStatement ps;
             if(currentCoinAmount == null) {
@@ -197,16 +199,28 @@ public class CoinManager {
         return false;
     }
 
-    public boolean deleteCoinKey(String name) {
+    @Override
+    public boolean renameCoinKey(String s, String s1) {
+        return false;
+    }
 
+    public boolean deleteCoinKey(String name) {
         try(Connection connection = plugin.getCoinDB().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM " + this.coinKeyTable + " where name = ?");
+            Integer coinId = getCoinKeyId(name);
+            if(coinId == null) {
+                return false;
+            }
+
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE " + this.coinKeyTable + " SET name = ? where id = ?;"
+            );
+
             ps.setString(1, name);
-            ps.executeUpdate();
+            ps.setInt(2, coinId);
 
             return true;
         } catch (SQLException e) {
-            Utils.debug("Cannot create a coin " + name, e);
+            Utils.debug("&cCannot rename a coin key to" + name, e);
         }
 
         return false;

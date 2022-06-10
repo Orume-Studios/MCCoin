@@ -31,7 +31,7 @@ public class ResetSubCmd extends SubCommand {
 
 
         Integer currentAmount = this.plugin.getCoinManager().getPlayerCoinAmount(playerName, coinId);
-        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, 0, currentAmount);
+        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(playerName, coinId, 0, currentAmount);
 
         if(isSuccess) {
             sender.sendMessage(ChatColor.GREEN + "Successfully reset the coins from " + ChatColor.YELLOW + playerName);

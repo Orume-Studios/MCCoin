@@ -16,7 +16,7 @@ public class RemoveSubCmd extends SubCommand {
     @Override
     public void execute(@NonNull CommandSender sender, @NonNull List<String> args) {
         if(args.size() < 3) {
-            sender.sendMessage(ChatColor.RED + "Usage: /mccoin add <coin_name> <player> <amount>");
+            sender.sendMessage(ChatColor.RED + "Usage: /mccoin remove <coin_name> <player> <amount>");
             return;
         }
 
@@ -44,7 +44,7 @@ public class RemoveSubCmd extends SubCommand {
         }
 
 
-        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, amount, currentAmount);
+        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(playerName, coinId, amount, currentAmount);
         if(isSuccess) {
             sender.sendMessage(ChatColor.GREEN + "Successfully removed " + ChatColor.YELLOW + args.get(2)  + ChatColor.GREEN + " coins from " + ChatColor.YELLOW + playerName);
         } else {

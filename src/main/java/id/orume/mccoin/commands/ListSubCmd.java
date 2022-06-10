@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ListSubCmd extends SubCommand{
     public ListSubCmd(MCCoin plugin) {
-        super(plugin, "list", "Shows the coin key names", "<name>", "mccoin.list", false);
+        super(plugin, "list", "Shows the coin key names", "", "mccoin.list", false);
     }
 
     @Override

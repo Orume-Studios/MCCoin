@@ -16,7 +16,7 @@ public class GetSubCmd extends SubCommand {
     @Override
     public void execute(@NonNull CommandSender sender, @NonNull List<String> args) {
         if(args.size() < 2) {
-            sender.sendMessage(ChatColor.RED + "Usage: /mccoin add <coin_name> <player>");
+            sender.sendMessage(ChatColor.RED + "Usage: /mccoin get <coin_name> <player>");
             return;
         }
 

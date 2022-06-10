@@ -33,7 +33,7 @@ public class AddSubCmd extends SubCommand {
         Integer currentAmount = this.plugin.getCoinManager().getPlayerCoinAmount(playerName, coinId);
 
         if(currentAmount != null) amount += currentAmount;
-        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(coinId, playerName, amount, currentAmount);
+        boolean isSuccess = this.plugin.getCoinManager().setPlayerCoinAmount(playerName, coinId, amount, currentAmount);
 
         if(isSuccess) {
             sender.sendMessage(ChatColor.GREEN + "Successfully added " + ChatColor.YELLOW + args.get(2) + ChatColor.GREEN + " coins to " + ChatColor.YELLOW + playerName);
