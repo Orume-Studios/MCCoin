@@ -4,8 +4,6 @@ main: id.orume.mccoin.MCCoin
 authors: [ Yusta ]
 description: Minecraft Exclusive Coin/Currency library for servers.
 website: orume.id
-depend:
-  - MCCoinAPI
 commands:
   mccoin:
     description: MCCoin command

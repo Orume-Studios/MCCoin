@@ -1,7 +1,6 @@
 package id.orume.mccoin;
 
 import id.orume.mccoin.utils.Utils;
-import id.orume.mccoinapi.ICoinManager;
 
 import java.sql.*;
 import java.util.ArrayList;
